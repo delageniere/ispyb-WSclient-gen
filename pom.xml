@@ -1,0 +1,235 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>ispyb</groupId>
+      <artifactId>ispyb-WSclient-gen</artifactId>        
+   <!--       <artifactId>ispyb-WSclient-SMIS-gen</artifactId>  -->    
+   <!-- <artifactId>ispyb-WSclient-updateFromSMIS</artifactId> -->
+  <!-- <artifactId>ispyb-WSclient-batch</artifactId> -->
+  <version>5.3.2</version> 
+  <packaging>jar</packaging>
+
+	<name>${name.gen}</name>
+   <!-- <name>ispyb-WSclient-updateFromSMIS</name> --> 
+
+  
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    
+       <name.userportal>ispyb-WSclient-userportal-gen</name.userportal>
+       <name.batch>ispyb-WSclient-batch</name.batch>
+    	<name.gen>ispyb-WSclient-gen</name.gen>
+    	
+    	<url.server.prod>http://ispyb.esrf.fr:8080</url.server.prod>
+    	<url.server.valid>http://ispyvalid.esrf.fr:8080</url.server.valid>
+    	<url.server.localhost>http://localhost:8080</url.server.localhost>
+    
+    	<ispyb.wsdl.url.prefix>${url.server.localhost}/ispyb/ispyb-ws/ispybWS</ispyb.wsdl.url.prefix>
+
+     	<smis.wsdl.url.prod>http://ovm-smis.esrf.fr:8080/SMISServer-ejb3/SMISWebService/SMISWebServiceBean?wsdl</smis.wsdl.url.prod>
+  		<smis.wsdl.url.local>http://localhost:8080/SMISServer-ejb3/SMISWebService/SMISWebServiceBean?wsdl</smis.wsdl.url.local> 
+     	<smis.wsdl.url.test>http://ovm-smis-test.esrf.fr:8080/SMISServer-ejb3/SMISWebService/SMISWebServiceBean?wsdl</smis.wsdl.url.test>  
+     	
+     	<smis.wsdl.url>${smis.wsdl.url.prod}</smis.wsdl.url>     
+     
+     <generated.package.name>generated.ws</generated.package.name>
+  </properties>
+
+  <dependencies>
+    
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+	<dependency>
+		<groupId>org.codehaus.mojo</groupId>
+		<artifactId>jaxws-maven-plugin</artifactId>
+		<version>1.12</version>
+	</dependency>
+	
+  </dependencies>
+  
+<build>
+	<plugins>
+	<plugin>
+		
+		<groupId>org.codehaus.mojo</groupId>
+		<artifactId>jaxws-maven-plugin</artifactId>
+		<version>1.12</version>
+		
+		<executions>
+ <!--
+		<execution>
+			<id>smis</id>
+				<goals>
+					<goal>wsimport</goal>
+				</goals>
+		
+				<configuration>
+				<bindingDirectory>src/main/resources</bindingDirectory>
+					<bindingFiles>
+                    	<bindingFile>
+                        		${basedir}/src/main/resources/bindings.xml
+                    	</bindingFile>
+                 	</bindingFiles>
+				
+					<wsdlUrls>
+              			<wsdlUrl>${smis.wsdl.url}</wsdlUrl>
+           			</wsdlUrls>
+					<packageName>generated.ws.smis</packageName>
+				</configuration>
+		</execution>
+
+		<execution>
+			<id>batch</id>
+				<goals>
+					<goal>wsimport</goal>
+				</goals>
+		
+				<configuration>
+				<bindingDirectory>src/main/resources</bindingDirectory>
+					<bindingFiles>
+                    	<bindingFile>
+                        		${basedir}/src/main/resources/bindings.xml
+                    	</bindingFile>
+                 	</bindingFiles>
+				
+					<wsdlUrls>
+              			<wsdlUrl>${ispyb.wsdl.url.prefix}/BatchWebService?wsdl</wsdlUrl>
+           			</wsdlUrls>
+					<packageName>generated.ws.common.batch</packageName>
+				</configuration>
+		</execution>
+
+ 	
+	<execution>
+			<id>batchUpdate</id>
+				<goals>
+					<goal>wsimport</goal>
+				</goals>
+		
+				<configuration>
+				<bindingDirectory>src/main/resources</bindingDirectory>
+					<bindingFiles>
+                    	<bindingFile>
+                        		${basedir}/src/main/resources/bindings.xml
+                    	</bindingFile>
+                 	</bindingFiles>
+				
+					<wsdlUrls>
+              			<wsdlUrl>${ispyb.wsdl.url.prefix}/UpdateFromSMISWebService?wsdl</wsdlUrl>
+           			</wsdlUrls>
+					<packageName>generated.ws.common.update</packageName>
+				</configuration>
+		</execution>
+-->	
+					
+		<execution>
+			<id>collection</id>
+				<goals>
+					<goal>wsimport</goal>
+				</goals>
+		
+				<configuration>
+				<bindingDirectory>src/main/resources</bindingDirectory>
+					<bindingFiles>
+                    	<bindingFile>
+                        		${basedir}/src/main/resources/bindings.xml
+                    	</bindingFile>
+                 	</bindingFiles>
+				
+					<wsdlUrls>
+              			<wsdlUrl>${ispyb.wsdl.url.prefix}/ToolsForCollectionWebService?wsdl</wsdlUrl>
+           			</wsdlUrls>
+					<packageName>${generated.package.name}.mx.collection</packageName>
+				</configuration>
+		</execution>
+
+		<execution>
+				<id>autoproc</id>
+				<goals>
+					<goal>wsimport</goal>
+				</goals>			
+				<configuration>
+					<bindingDirectory>src/main/resources</bindingDirectory>
+					<bindingFiles>
+                    	<bindingFile>
+                        		${basedir}/src/main/resources/bindings.xml
+                    	</bindingFile>
+                 	</bindingFiles>
+					<wsdlUrls>
+              			<wsdlUrl>${ispyb.wsdl.url.prefix}/ToolsForAutoprocessingWebService?wsdl</wsdlUrl>
+            		</wsdlUrls>
+					<packageName>${generated.package.name}.mx.autoproc</packageName>
+				</configuration>
+		</execution>
+		
+				<execution>
+				<id>blsample</id>
+				<goals>
+					<goal>wsimport</goal>
+				</goals>			
+				<configuration>
+					<bindingDirectory>src/main/resources</bindingDirectory>
+					<bindingFiles>
+                    	<bindingFile>
+                        		${basedir}/src/main/resources/bindings.xml
+                    	</bindingFile>
+                 	</bindingFiles>
+					<wsdlUrls>
+              			<wsdlUrl>${ispyb.wsdl.url.prefix}/ToolsForBLSampleWebService?wsdl</wsdlUrl>
+            		</wsdlUrls>
+					<packageName>${generated.package.name}.mx.blsample</packageName>
+				</configuration>
+		</execution>
+		
+				<execution>
+				<id>edna</id>
+				<goals>
+					<goal>wsimport</goal>
+				</goals>			
+				<configuration>
+					<bindingDirectory>src/main/resources</bindingDirectory>
+					<bindingFiles>
+                    	<bindingFile>
+                        		${basedir}/src/main/resources/bindings.xml
+                    	</bindingFile>
+                 	</bindingFiles>
+					<wsdlUrls>
+              			<wsdlUrl>${ispyb.wsdl.url.prefix}/ToolsForScreeningEDNAWebService?wsdl</wsdlUrl>
+            		</wsdlUrls>
+					<packageName>${generated.package.name}.mx.edna</packageName>
+				</configuration>
+		</execution>
+		
+				<execution>
+				<id>shipping</id>
+				<goals>
+					<goal>wsimport</goal>
+				</goals>			
+				<configuration>
+					<bindingDirectory>src/main/resources</bindingDirectory>
+					<bindingFiles>
+                    	<bindingFile>
+                        		${basedir}/src/main/resources/bindings.xml
+                    	</bindingFile>
+                 	</bindingFiles>
+					<wsdlUrls>
+              			<wsdlUrl>${ispyb.wsdl.url.prefix}/ToolsForShippingWebService?wsdl</wsdlUrl>
+            		</wsdlUrls>
+					<packageName>${generated.package.name}.mx.shipping</packageName>
+				</configuration>
+		</execution>
+	 	
+		<!--  		-->		
+		</executions>		
+			
+		</plugin>
+	</plugins>
+</build>
+</project>
