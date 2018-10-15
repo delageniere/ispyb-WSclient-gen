@@ -3,14 +3,16 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>ispyb</groupId>
-      <artifactId>ispyb-WSclient-gen</artifactId>        
-   <!--       <artifactId>ispyb-WSclient-SMIS-gen</artifactId>  -->    
+     <!-- <artifactId>ispyb-WSclient-gen</artifactId>       --> 
+         <artifactId>ispyb-userportal-gen</artifactId>     
    <!-- <artifactId>ispyb-WSclient-updateFromSMIS</artifactId> -->
-  <!-- <artifactId>ispyb-WSclient-batch</artifactId> -->
-  <version>5.3.2</version> 
+   
+  <!--  <artifactId>ispyb-WSclient-gen-all</artifactId> --> 
+
+  <version>1.5</version> 
   <packaging>jar</packaging>
 
-	<name>${name.gen}</name>
+	<name>${name.userportal}</name>
    <!-- <name>ispyb-WSclient-updateFromSMIS</name> --> 
 
   
@@ -19,21 +21,21 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     
-       <name.userportal>ispyb-WSclient-userportal-gen</name.userportal>
+       <name.userportal>ispyb-userportal-gen</name.userportal>
        <name.batch>ispyb-WSclient-batch</name.batch>
     	<name.gen>ispyb-WSclient-gen</name.gen>
     	
-    	<url.server.prod>http://ispyb.esrf.fr:8080</url.server.prod>
-    	<url.server.valid>http://ispyvalid.esrf.fr:8080</url.server.valid>
+    	<url.server.prod>https://ispyb.esrf.fr</url.server.prod>
+    	<url.server.valid>https://ispyb-valid.esrf.fr</url.server.valid>
     	<url.server.localhost>http://localhost:8080</url.server.localhost>
     
     	<ispyb.wsdl.url.prefix>${url.server.localhost}/ispyb/ispyb-ws/ispybWS</ispyb.wsdl.url.prefix>
 
-     	<smis.wsdl.url.prod>http://ovm-smis.esrf.fr:8080/SMISServer-ejb3/SMISWebService/SMISWebServiceBean?wsdl</smis.wsdl.url.prod>
+     	<smis.wsdl.url.prod>https://smis.esrf.fr/SMISServer-ejb3/SMISWebService/SMISWebServiceBean?wsdl</smis.wsdl.url.prod>
   		<smis.wsdl.url.local>http://localhost:8080/SMISServer-ejb3/SMISWebService/SMISWebServiceBean?wsdl</smis.wsdl.url.local> 
-     	<smis.wsdl.url.test>http://ovm-smis-test.esrf.fr:8080/SMISServer-ejb3/SMISWebService/SMISWebServiceBean?wsdl</smis.wsdl.url.test>  
+     	<smis.wsdl.url.test>https://ovm-smis-test.esrf.fr/SMISServer-ejb3/SMISWebService/SMISWebServiceBean?wsdl</smis.wsdl.url.test>  
      	
-     	<smis.wsdl.url>${smis.wsdl.url.prod}</smis.wsdl.url>     
+     	<smis.wsdl.url>${smis.wsdl.url.test}</smis.wsdl.url>     
      
      <generated.package.name>generated.ws</generated.package.name>
   </properties>
@@ -63,7 +65,7 @@
 		<version>1.12</version>
 		
 		<executions>
- <!--
+
 		<execution>
 			<id>smis</id>
 				<goals>
@@ -85,6 +87,7 @@
 				</configuration>
 		</execution>
 
+<!--  
 		<execution>
 			<id>batch</id>
 				<goals>
@@ -127,8 +130,8 @@
 					<packageName>generated.ws.common.update</packageName>
 				</configuration>
 		</execution>
--->	
-					
+	
+ 					
 		<execution>
 			<id>collection</id>
 				<goals>
@@ -225,6 +228,26 @@
 					<packageName>${generated.package.name}.mx.shipping</packageName>
 				</configuration>
 		</execution>
+		
+		<execution>
+				<id>crims</id>
+				<goals>
+					<goal>wsimport</goal>
+				</goals>			
+				<configuration>
+					<bindingDirectory>src/main/resources</bindingDirectory>
+					<bindingFiles>
+                    	<bindingFile>
+                        		${basedir}/src/main/resources/bindings.xml
+                    	</bindingFile>
+                 	</bindingFiles>
+					<wsdlUrls>
+              			<wsdlUrl>${ispyb.wsdl.url.prefix}/CrimsWebService?wsdl</wsdlUrl>
+            		</wsdlUrls>
+					<packageName>${generated.package.name}.mx.crims</packageName>
+				</configuration>
+		</execution>
+--> 		
 	 	
 		<!--  		-->		
 		</executions>		
