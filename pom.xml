@@ -4,17 +4,15 @@
 
   <groupId>ispyb</groupId>
      <!-- <artifactId>ispyb-WSclient-gen</artifactId>       --> 
-         <artifactId>ispyb-userportal-gen</artifactId>     
-   <!-- <artifactId>ispyb-WSclient-updateFromSMIS</artifactId> -->
+    <!--   <artifactId>ispyb-userportal-gen</artifactId>    --> 
+   <!--  <artifactId>ispyb-WSclient-batchUpdate</artifactId> --> 
    
-  <!--  <artifactId>ispyb-WSclient-gen-all</artifactId> --> 
+     <artifactId>ispyb-WSclient-gen-all</artifactId> 
 
-  <version>1.5</version> 
+  <version>1.8</version> 
   <packaging>jar</packaging>
 
-	<name>${name.userportal}</name>
-   <!-- <name>ispyb-WSclient-updateFromSMIS</name> --> 
-
+  <name>${name.gen}</name>
   
   <url>http://maven.apache.org</url>
 
@@ -23,7 +21,11 @@
     
        <name.userportal>ispyb-userportal-gen</name.userportal>
        <name.batch>ispyb-WSclient-batch</name.batch>
-    	<name.gen>ispyb-WSclient-gen</name.gen>
+       <name.batchUpdate>ispyb-WSclient-batchUpdate</name.batchUpdate>
+       
+    	<name.gen>ispyb-WSclient-gen-all</name.gen>
+    	
+    	<!--  <name.gen>ispyb-userportal-gen</name.gen> -->
     	
     	<url.server.prod>https://ispyb.esrf.fr</url.server.prod>
     	<url.server.valid>https://ispyb-valid.esrf.fr</url.server.valid>
@@ -35,7 +37,7 @@
   		<smis.wsdl.url.local>http://localhost:8080/SMISServer-ejb3/SMISWebService/SMISWebServiceBean?wsdl</smis.wsdl.url.local> 
      	<smis.wsdl.url.test>https://ovm-smis-test.esrf.fr/SMISServer-ejb3/SMISWebService/SMISWebServiceBean?wsdl</smis.wsdl.url.test>  
      	
-     	<smis.wsdl.url>${smis.wsdl.url.test}</smis.wsdl.url>     
+     	<smis.wsdl.url>${smis.wsdl.url.prod}</smis.wsdl.url>     
      
      <generated.package.name>generated.ws</generated.package.name>
   </properties>
@@ -65,7 +67,7 @@
 		<version>1.12</version>
 		
 		<executions>
-
+ <!-- -->	
 		<execution>
 			<id>smis</id>
 				<goals>
@@ -86,8 +88,9 @@
 					<packageName>generated.ws.smis</packageName>
 				</configuration>
 		</execution>
+ 
 
-<!--  
+
 		<execution>
 			<id>batch</id>
 				<goals>
@@ -130,8 +133,7 @@
 					<packageName>generated.ws.common.update</packageName>
 				</configuration>
 		</execution>
-	
- 					
+	  				
 		<execution>
 			<id>collection</id>
 				<goals>
@@ -247,7 +249,27 @@
 					<packageName>${generated.package.name}.mx.crims</packageName>
 				</configuration>
 		</execution>
---> 		
+				
+		<execution>
+				<id>em</id>
+				<goals>
+					<goal>wsimport</goal>
+				</goals>			
+				<configuration>
+					<bindingDirectory>src/main/resources</bindingDirectory>
+					<bindingFiles>
+                    	<bindingFile>
+                        		${basedir}/src/main/resources/bindings.xml
+                    	</bindingFile>
+                 	</bindingFiles>
+					<wsdlUrls>
+              			<wsdlUrl>${ispyb.wsdl.url.prefix}/ToolsForEMWebService?wsdl</wsdlUrl>
+            		</wsdlUrls>
+					<packageName>${generated.package.name}.em</packageName>
+				</configuration>
+		</execution>
+		
+
 	 	
 		<!--  		-->		
 		</executions>		
